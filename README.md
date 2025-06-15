@@ -14,7 +14,7 @@ Shade Creed is a command-line penetration testing toolkit designed for web appli
 ## ✨ Features
 - Custom HTTP/HTTPS header injection (supports multiple methods)
 - Dynamic XSS payload creation and deployment
-- Lightweight XSS vulnerability scanner
+- Lightweight vulnerability scanner
 - Proxy support (basic)
 
 
