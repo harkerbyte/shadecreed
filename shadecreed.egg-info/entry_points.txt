@@ -1,0 +1,8 @@
+[console_scripts]
+shadecreed = shadecreed.__main__:start
+shadecreed-brute = shadecreed.core.utils.assemble:runStartAssembling
+shadecreed-editor = shadecreed.core.headers.argue:runHeaderEditor
+shadecreed-log = shadecreed.core.utils.base:readXssLog
+shadecreed-scan = shadecreed.core.utils.build:runAnalyzeHeaders
+shadecreed-test = shadecreed.__test__:send_json
+shadecreed-xss = shadecreed.core.utils.build:runBuildXss
