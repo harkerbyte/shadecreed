@@ -79,7 +79,7 @@ sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
 cloudflared --version
 ```
 
-**For chromium installation, help yourself**
+**For chromium installation, help yourself.**
 
 ---
 
