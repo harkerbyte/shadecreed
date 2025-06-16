@@ -38,6 +38,6 @@ setup(
         "Facebook": "https://facebook.com/harkerbyte",
         "Instagram": "https://instagram.com/harkerbyte"
     },
-    long_description=open("shadecreed/README.md", encoding="utf-8").read(),
+    long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
 )
