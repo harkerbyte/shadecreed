@@ -1,12 +1,13 @@
 # Shade Creed Toolkit
 
-![1000054704](https://github.com/user-attachments/assets/cdd06be5-3081-44e4-b032-7a984c655b6d)
+![1000054704](https://github.com/user-attachments/assets/de639d27-2f4a-4935-9c36-b7c859b256af)
+
 
 ## ✨ Overview
 Shade Creed is a command-line penetration testing toolkit designed for web application assessment. It provides tools to inject custom headers, deploy and test XSS payloads, and scan for common vulnerabilities. Built with modularity in mind, it allows you to dynamically customize and deploy payloads for real-world testing scenarios.
 
-**Version**: 0.0.4 beta
-**Author**: shade - Adesola Sherifdeen  
+**Version**: 0.0.4 beta  
+**Author**: shade - Sherifdeen Adesola  
 **Platform**: Linux / Android & Cross platform compatible 
 
 ---
