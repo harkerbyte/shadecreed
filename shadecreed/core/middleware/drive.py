@@ -43,7 +43,7 @@ class drive:
               wr(xssAssist(self.content_delivery()))
               self.process()
           else:
-            wr('Missing cloudflared package, see documentation : ')
+            wr('Missing cloudflared package, see documentation : https://pypi.org/project/shadecreed/',co='\x1b[1;33m')
             self.close()
         else:
           self.close()

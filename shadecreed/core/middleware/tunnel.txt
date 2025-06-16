@@ -1,23 +1,27 @@
-2025-06-16T08:15:35Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
-2025-06-16T08:15:35Z INF Requesting new quick Tunnel on trycloudflare.com...
-2025-06-16T08:15:45Z INF +--------------------------------------------------------------------------------------------+
-2025-06-16T08:15:45Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
-2025-06-16T08:15:45Z INF |  https://cord-opened-janet-aim.trycloudflare.com                                           |
-2025-06-16T08:15:45Z INF +--------------------------------------------------------------------------------------------+
-2025-06-16T08:15:45Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
-2025-06-16T08:15:45Z INF Version 2025.5.0 (Checksum 33aeb4c5b637f7638ae7f9413eedb34b38035172e32940306871cd4ecc4d0be1)
-2025-06-16T08:15:45Z INF GOOS: android, GOVersion: go1.24.2, GoArch: arm
-2025-06-16T08:15:45Z INF Settings: map[ha-connections:1 protocol:quic url:127.0.0.1:5000]
-2025-06-16T08:15:45Z INF Autoupdate frequency is set autoupdateFreq=86400000
-2025-06-16T08:15:45Z INF Generated Connector ID: f9bc2dc4-28c7-4f8b-b52f-a64b28a82c7c
-2025-06-16T08:15:45Z INF Initial protocol quic
-2025-06-16T08:15:45Z INF ICMP proxy will use 10.121.224.148 as source for IPv4
-2025-06-16T08:15:45Z INF ICMP proxy will use :: as source for IPv6
-2025-06-16T08:15:45Z WRN The user running cloudflared process has a GID (group ID) that is not within ping_group_range. You might need to add that user to a group within that range, or instead update the range to encompass a group the user is already in by modifying /proc/sys/net/ipv4/ping_group_range. Otherwise cloudflared will not be able to ping this network error="open /proc/sys/net/ipv4/ping_group_range: permission denied"
-2025-06-16T08:15:56Z INF ICMP proxy will use 10.121.224.148 as source for IPv4
-2025-06-16T08:15:56Z INF ICMP proxy will use :: as source for IPv6
-2025-06-16T08:15:56Z INF Starting metrics server on 127.0.0.1:20241/metrics
-2025-06-16T08:15:56Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(25497) CurveP256] connIndex=0 event=0 ip=198.41.192.27
-2025-06-16T08:15:56Z INF Registered tunnel connection connIndex=0 connection=b4b84b9e-fec0-4e8a-b2f9-298d2b35cabc event=0 ip=198.41.192.27 location=los01 protocol=quic
-2025-06-16T08:16:27Z ERR  error="Incoming request ended abruptly: context canceled" connIndex=0 event=1 ingressRule=0 originService=http://127.0.0.1:5000
-2025-06-16T08:16:27Z ERR Request failed error="Incoming request ended abruptly: context canceled" connIndex=0 dest=https://cord-opened-janet-aim.trycloudflare.com/steal event=0 ip=198.41.192.27 type=http
+2025-06-16T22:55:01Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+2025-06-16T22:55:01Z INF Requesting new quick Tunnel on trycloudflare.com...
+2025-06-16T22:55:08Z INF +--------------------------------------------------------------------------------------------+
+2025-06-16T22:55:08Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+2025-06-16T22:55:08Z INF |  https://original-extensive-questionnaire-charter.trycloudflare.com                        |
+2025-06-16T22:55:08Z INF +--------------------------------------------------------------------------------------------+
+2025-06-16T22:55:08Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
+2025-06-16T22:55:08Z INF Version 2025.6.0 (Checksum da9b2f14a14d9f506d38a10584139a98c9b9d876126eabdf1df1a74e524b3064)
+2025-06-16T22:55:08Z INF GOOS: android, GOVersion: go1.24.2, GoArch: arm
+2025-06-16T22:55:08Z INF Settings: map[ha-connections:1 protocol:quic url:127.0.0.1:5000]
+2025-06-16T22:55:08Z INF Autoupdate frequency is set autoupdateFreq=86400000
+2025-06-16T22:55:08Z INF Generated Connector ID: f87da321-4d90-4891-b841-63a790b6d4a2
+2025-06-16T22:55:08Z INF Initial protocol quic
+2025-06-16T22:55:08Z INF ICMP proxy will use 10.92.205.117 as source for IPv4
+2025-06-16T22:55:08Z INF ICMP proxy will use :: as source for IPv6
+2025-06-16T22:55:08Z WRN The user running cloudflared process has a GID (group ID) that is not within ping_group_range. You might need to add that user to a group within that range, or instead update the range to encompass a group the user is already in by modifying /proc/sys/net/ipv4/ping_group_range. Otherwise cloudflared will not be able to ping this network error="open /proc/sys/net/ipv4/ping_group_range: permission denied"
+2025-06-16T22:55:09Z INF ICMP proxy will use 10.92.205.117 as source for IPv4
+2025-06-16T22:55:09Z INF ICMP proxy will use :: as source for IPv6
+2025-06-16T22:55:09Z INF Starting metrics server on 127.0.0.1:20241/metrics
+2025-06-16T22:55:09Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(25497) CurveP256] connIndex=0 event=0 ip=198.41.200.73
+2025-06-16T22:55:09Z INF Registered tunnel connection connIndex=0 connection=b67655eb-5710-4ce7-98ef-3308d7ab320f event=0 ip=198.41.200.73 location=lhr14 protocol=quic
+2025-06-16T22:55:24Z INF Initiating graceful shutdown due to signal interrupt ...
+2025-06-16T22:55:25Z ERR Failed to serve tunnel connection error="context canceled" connIndex=0 event=0 ip=198.41.200.73
+2025-06-16T22:55:25Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.73
+2025-06-16T22:55:25Z ERR no more connections active and exiting
+2025-06-16T22:55:25Z INF Tunnel server stopped
+2025-06-16T22:55:25Z INF Metrics server stopped

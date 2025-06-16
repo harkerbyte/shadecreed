@@ -73,7 +73,7 @@ class main:
 def start():
   parse = argparse.ArgumentParser(description="A cli web application pentesting toolkit. Seem you intend to start the whole framework, that\'s great 🗿")
   parse.add_argument('-u','--url',help="<target_url>",required=True)
-  parse.add_argument('-v','--version',action="version",version="shadecreed - 0.0.5",help="Display framework version")
+  parse.add_argument('-v','--version',action="version",version="shadecreed - 0.13.6",help="Display framework version")
   args = parse.parse_args()
   
   if args.url:

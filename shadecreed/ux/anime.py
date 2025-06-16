@@ -42,15 +42,19 @@ def wrcold(te,ti=0.01,co=plain,timeout=1,reverse=False):
     sys.stdout.flush()
     time.sleep(ti)
   time.sleep(timeout)
-  sys.stdout.write(f'\r' + ' ' * width + '\r')
-  if reverse:
-    sys.stdout.write(f'\x1b[1A' + ' ' * width + '\r')
+  if len(te) <= width:
+    sys.stdout.write(f'\r' + ' ' * width + '\r')
+    if reverse:
+      sys.stdout.write(f'\x1b[1A' + ' ' * width + '\r')
+  else:
+    total = width // len(te)
+    sys.stdout.write(f'\x1b[{total}A' + ' ' * width + '\r')
   sys.stdout.write(plain)
   
 def wrloader(ti=5):
   sys.stdout.write('\r')
   for i in range(ti+1):
-    sys.stdout.write(f'\r{green}' + ' '*4 + ['.'][0] * i)
+    sys.stdout.write(f'\r{green}' + ['.'][0] * i)
     time.sleep(1)
   sys.stdout.write(f'\r{plain}')
   
@@ -71,6 +75,8 @@ def wrcom(dictone, dicttwo, ti=0.005):
         val2 = dicttwo[key]
         if val1 != val2:
           sys.stdout.write(f'{key} : {yellow}{val2}{plain}')
+        else:
+          sys.stdout.write(f'{key} : {val2}')
       
       
       

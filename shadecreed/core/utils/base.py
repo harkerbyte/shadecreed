@@ -13,14 +13,14 @@ cache_dir = base_dir / 'cache'
 password_dir = base_dir / 'path'
 
 
-def onload_file(file):
-  if os.path.isfile(file):
-    if '/' in file:
-      target = file.split('/')[-1:]
+def onload_file(onload):
+  if os.path.isfile(onload):
+    if '/' in onload:
+      target = onload.split('/')[-1:]
       file = target[0]
     name, ext = os.path.splitext(file)
     if ext == '.json':
-      with open(file, 'r') as loaded:
+      with open(onload, 'r') as loaded:
         try:
           return json.load(loaded)
         except JSONDecodeError:
@@ -29,8 +29,9 @@ def onload_file(file):
       wr(f'{file.split('/')[-1:]} carries an invalid extension for a json document')
       sys.exit()
   else:
-    raise FileNotFoundError(f'{file} was not found')
-    
+    raise FileNotFoundError(f'{onload} was not found')
+
+"""    
 def readXssLog():
   parse = argparse.ArgumentParser(description="Read xss captured datas")
   parse.add_argument('-r','--read',help="Provide the number of recent datas to display - LIFO")
@@ -45,4 +46,5 @@ def readXssLog():
       
     wrdic(Lifo)
   else:
-    wr(f'{stream_dir}/streamed.json doesn\'t exist yet')
+    wr(f'There are no existing log')
+"""

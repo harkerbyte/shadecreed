@@ -1,13 +1,12 @@
 # Shade Creed Toolkit
 
-![1000054704](https://github.com/user-attachments/assets/de639d27-2f4a-4935-9c36-b7c859b256af)
-
+![1000054704](https://github.com/user-attachments/assets/cdd06be5-3081-44e4-b032-7a984c655b6d)
 
 ## ✨ Overview
 Shade Creed is a command-line penetration testing toolkit designed for web application assessment. It provides tools to inject custom headers, deploy and test XSS payloads, and scan for common vulnerabilities. Built with modularity in mind, it allows you to dynamically customize and deploy payloads for real-world testing scenarios.
 
-**Version**: 0.0.4 beta  
-**Author**: shade - Sherifdeen Adesola  
+**Version**: 0.13.6  
+**Author**: shade - Adesola Sherifdeen  
 **Platform**: Linux / Android & Cross platform compatible 
 
 ---
@@ -26,17 +25,24 @@ Shade Creed is a command-line penetration testing toolkit designed for web appli
 pip install shadecreed
 ```
 ---
-## Additional package : cloudflared 
+## Additional packages : cloudflared && Chromium
 **Installation:**
 ##### Android (termux)
 ```bash
 pkg install cloudflared
 ``` 
+```bash
+pkg install x11-repo tur-repo chromium
+```
 ##### Macos 
 ```bash
 brew install cloudflared 
 ```
+```bash
+brew install --cask chromium
+```
 ##### Windows
+**cloudflared:**
 1. Visit the official download page:
 👉 https://developers.cloudflare.com/cloudflared/install-windows
 2. Download the latest cloudflared-windows-amd64.exe.
@@ -48,6 +54,12 @@ Under System variables, find and edit Path
 Add: C:\cloudflared\
 6. Verify installation:
 cloudflared --version
+
+**chromium:**
+1. Find a reliable source: Websites like [Woolyss](https://chromium.woolyss.com/download/) offer pre-built versions of Chromium. 
+2. Download the appropriate version: Choose the correct 32-bit or 64-bit version for your system. 
+3. Run the installer: Follow the on-screen instructions to install Chromium. 
+4. Test the installation: Launch Chromium and verify that it opens and functions correctly.
 
 ##### Linux distros 
 
@@ -70,6 +82,9 @@ sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
 ```bash
 cloudflared --version
 ```
+
+**For chromium installation, help yourself**
+
 ---
 
 ## ⚙️ CLI Tools

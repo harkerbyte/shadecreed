@@ -1,4 +1,4 @@
-import re,os,json,threading
+import re,os,json,threading,datetime
 from bs4 import BeautifulSoup as bs
 from shadecreed.ux.anime import wr,wrdic,wrcom
 from shadecreed.core.headers.network.proxy import readCache
@@ -70,43 +70,41 @@ def processContent(response,saveTo):
   
 class streamData:
   def __init__(self,data,streamed=None):
-    self.data = json.load(data) if isinstance(data, str) else data
-    self.streamed = streamed if streamed != None else {}
+    self.data = data if isinstance(data, dict) else dict(data)
+    self.streamed = streamed if streamed != None else dict()
     self.keep_alive = None
+    self.process()
     
   def writejson(self):
-    with open(f'{base_dir}/stream/streamed.json', 'w') as write:
+    with open(f'{stream_dir}/streamed.json', 'w') as write:
       json.dump(f'{{}}', write)
       
   def process(self):
     if os.path.exists(f'{base_dir}/core/middleware/process.json'):
-      with open(f'{base_dir}/core/middleware/process.json', 'r') as proc:
-        status = json.load(proc)
-        self.keep_alive = status['keep-alive']
+      status = onload_file(f'{base_dir}/core/middleware/process.json')
+      self.keep_alive = status['keep-alive']
     else:
        self.keep_alive = False
       
   def streaming(self):
-    self.process()
     if isinstance(self.data, dict):
       for key, value in self.data.items():
         if self.keep_alive:
           wr('%s : %s'%(key, value))
-        self.streamed[key] = value
-      self.conclude()
       
   def conclude(self):
-    if os.path.exists(f'{stream_dir}/streamed.json'):
-      try:
-        existing_data = onload_file(f'{stream_dir}/streamed.json')
-        with open(f'{stream_dir}/streamed.json', 'w') as rewrite:
-          existing_data.update(self.streamed)
-          json.dump(existing_data, rewrite, indent=2)
-      except Exception as error:
-        print(error)
-        print(stream_dir)
+    while True:
+      if os.path.exists(f'{stream_dir}/streamed.json'):
+        try:
+          existing_data = onload_file(f'{stream_dir}/streamed.json')
+          with open(f'{stream_dir}/streamed.json', 'w') as rewrite:
+            existing_data.update(self.streamed)
+            json.dump(existing_data, rewrite, indent=2)
+            break
+        except Exception as error:
+          print(error)
+          self.writejson()
+      else:
         self.writejson()
-    else:
-      self.writejson()
         
     

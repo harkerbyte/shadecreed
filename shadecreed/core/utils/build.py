@@ -232,7 +232,9 @@ def buildXss(url=None,template=None,endpoint=None):
       
     
     try:
-      if silent and silent.lower() in ('yes','y'):
+      if silent or not silent:
+        if silent.lower() in ('no','n',''):
+          wrcold('Currently unable to log received datas',co='\x1b[1;33m',timeout=3)
         wr('Grab a coffee ☕, this might take a while')
         wr('`ctrl+c` to close session',co='\x1b[1;31m')
         xss.listen()

@@ -50,9 +50,11 @@ class cache:
     for each in del_each:
       try:
         os.path.remove(each)
+        del_each.remove(each)
       except Exception:
         continue
-    wrcold('Cache cleared',co='\x1b[1;31m',timeout=2)
+    if not del_each:
+      wrcold('Cache cleared',co='\x1b[1;31m',timeout=2)
     sys.exit()
  
       

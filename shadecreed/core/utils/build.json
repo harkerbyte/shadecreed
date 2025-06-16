@@ -1,7 +1,7 @@
 {
   "targetweb": "https://facebook.com",
-  "Password": "Password",
   "Email address or phone number": "Email address or phone number",
+  "Password": "Password",
   "sub_tag": "div",
   "click": "Log in",
   "failed": "Wrong"

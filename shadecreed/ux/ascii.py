@@ -94,7 +94,7 @@ xss = f"""
 {bg_blue}CROSS SITE SCRIPTING{plain}
 
 [+] Type `{red}q{plain}` to quit.
-[!] Read : {yellow}https://github.com/harkerbyte/shade-creed#xss{plain}
+[!] Read : {yellow}https://github.com/harkerbyte/shadecreed{plain}
 """
 
 def bruteAssist():

