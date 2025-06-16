@@ -2,7 +2,8 @@ from setuptools import setup, find_packages
 
 setup(
     name="shadecreed",
-    version="0.0.4",
+    version="0.0.5",
+    description="A CLI framework for web application assessments and penetration testing — built with modularity, continuous maintenance, and frequent updates in mind.",
     author="Shade",
     author_email="adesolasherifdeen3@gmail.com",
     packages=find_packages(),
