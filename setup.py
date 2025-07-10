@@ -34,7 +34,7 @@ setup(
         "Operating System :: OS Independent",
     ],
     project_urls={
-        "GitHub": "https://github.com/harkerbyte",
+        "GitHub": "https://github.com/harkerbyte/shadecreed",
         "Facebook": "https://facebook.com/harkerbyte",
         "Whatsapp" : "https://whatsapp.com/channel/0029Vb5f98Z90x2p6S1rhT0S",
         "Youtube" : "https://youtube.com/@harkerbyte",
