@@ -1,6 +1,6 @@
 import sys,httpx,argparse
 from bs4 import BeautifulSoup as bs
-from shadecreed.ux.anime import wr,wrdic,wrdel
+from shadecreed.ux.anime import wr,wrdic,wrdel,wrcold
 from shadecreed.ux.ascii import red,blue,yellow,green,plain
 from shadecreed.ux.process import processResponse
 from shadecreed.core.utils.build import buildConfig
@@ -27,6 +27,8 @@ closed = f"""
 CLOSED INPUT FIELDS AUTOMATION
 """
 findsubmit=f"""
+[!] Type `assist-{{the login button/link text}}` to assist with finding the submission entry.
+
 Now...Let\'s Proceed To Find The Submit Button
 """
 def findInputs(document):
@@ -40,12 +42,15 @@ def findInputs(document):
     wr('There are no input field with placeholder')
   
 def retrieveForm(form,target):
-  elements = ['div','p','a','b','button']
-  drop = list()
-  for each in elements:
-    drop.extend(form.find_all(each, string=target))
-  wr(drop,ti=0.001)
+  try:
+    elements = ['div','p','a','b','button']
+    drop = list()
+    for each in elements:
+      drop.extend(form.find_all(each, string=target))
+      wr(drop,ti=0.001)
     
+  except TypeError:
+    wrcold(f'{target} not found on the page',reverse=True)
     
 def findSubmit(document,placeholders):
   wr(f'Retrieved inputs by placeholder : {yellow}{[item.get('placeholder') for item in placeholders]}{plain}', ti=0.0002)
@@ -63,8 +68,9 @@ def findSubmit(document,placeholders):
         in_text = input('Type the submission `button` displayed text : ').strip()
         if in_text.lower() == 'q':
           button.clear()
+          findbutton = False
           break
-        elif in_text.lower().startswith('assist-'):
+        elif in_text.lower() in  ['assist-']:
           if '-' in in_text:
             com, target = in_text.split('-')
             retrieveForm(target_form,target)
@@ -89,10 +95,12 @@ def findSubmit(document,placeholders):
             extracted.clear()
             findbutton = False
       else:
-        wr('Submit button/link extraction... Failed')
+        wr('Submit button/link extraction... Failed',co='\x1b[1;31m')
+    except TypeError:
+      wrcold(f'contexts not found on the page',reverse=True)
     except Exception as error:
       print(error)
-        
+    
 
 def runStartAssembling():
   parse = argparse.ArgumentParser(description="shadecreed toolkit : admin page custom brute force; this tool is in beta version and as of version 0.0.4 : it can only make 10 password attempts")
@@ -141,14 +149,14 @@ def startAssembling(document=None,parser='html.parser',url=None,redirects=None):
               if seen:
                 inputs.add(seen)
               else:
-                wr(f'{placeholder.strip()} not found')
+                wrcold(f'{placeholder.strip()} not found',reverse=True)
           else:
             seen = text.find('input', attrs ={'placeholder' : placeholders.strip()})
             if seen:
               inputs.add(seen)
               
             else:
-              wr(f'[-] {placeholders}` not found')
+              wrcold(f'[-] {placeholders}` not found',reverse=True)
   
 if __name__ == "__main__":
   pass

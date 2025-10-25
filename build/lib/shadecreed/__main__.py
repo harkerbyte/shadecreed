@@ -53,16 +53,17 @@ class main:
       if ac_forms:
         break
     if ac_forms:
-      self.sldel(read,'[+] Forms were found ✅')
+      #self.sldel(read,'[+] Forms were found ✅')
+      pass
     else:
-      self.sldel(read, '[-] No forms were found ❌')
-    
+      #self.sldel(read, '[-] No forms were found ❌')
+      pass
   def cont(self):
     try:
-      self.sl('[+] Attempting to establish an initial connection',ti=0.005)
+      wrcold('[+] Attempting to establish an initial connection',ti=0.05)
       re = httpx.request('GET',self.target,follow_redirects=True)
       if re.status_code == 200:
-        self.sl('[+] Connection established ✅')
+        wrcold('[+] Connection established ✅')
       self.fiforms(re)
       global cache
       cache = cache(self.target,re.headers,re)
@@ -73,7 +74,7 @@ class main:
 def start():
   parse = argparse.ArgumentParser(description="A cli web application pentesting toolkit. Seem you intend to start the whole framework, that\'s great 🗿")
   parse.add_argument('-u','--url',help="<target_url>",required=True)
-  parse.add_argument('-v','--version',action="version",version="shadecreed - 0.11.0",help="Display framework version")
+  parse.add_argument('-v','--version',action="version",version="shadecreed - 0.13.7",help="Display framework version")
   args = parse.parse_args()
   
   if args.url:

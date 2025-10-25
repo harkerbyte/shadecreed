@@ -5,13 +5,15 @@ red='\x1b[1;31m'
 yellow='\x1b[1;33m'
 plain='\x1b[1;0m'
 
+redefine = lambda text : ''.join(' ' if c == '_' else c for c in text)
+
 def wr(te,ti=0.0002,co=plain):
   sys.stdout.write(co)
   for ie in te:
     sys.stdout.write(ie)
     sys.stdout.flush()
     time.sleep(ti)
-  sys.stdout.write(f'\n{plain}')
+  sys.stdout.write(f'{plain}\n')
   
 def wrdel(te,re,ti=0.005):
   for ie in te:
@@ -42,15 +44,19 @@ def wrcold(te,ti=0.01,co=plain,timeout=1,reverse=False):
     sys.stdout.flush()
     time.sleep(ti)
   time.sleep(timeout)
-  sys.stdout.write(f'\r' + ' ' * width + '\r')
-  if reverse:
-    sys.stdout.write(f'\x1b[1A' + ' ' * width + '\r')
+  if len(te) <= width:
+    sys.stdout.write(f'\r' + ' ' * width + '\r')
+    if reverse:
+      sys.stdout.write(f'\x1b[1A' + ' ' * width + '\r')
+  else:
+    total = width // len(te)
+    sys.stdout.write(f'\x1b[{total}A' + ' ' * width + '\r')
   sys.stdout.write(plain)
   
 def wrloader(ti=5):
   sys.stdout.write('\r')
   for i in range(ti+1):
-    sys.stdout.write(f'\r{green}' + ' '*4 + ['.'][0] * i)
+    sys.stdout.write(f'\r{green}' + ['.'][0] * i)
     time.sleep(1)
   sys.stdout.write(f'\r{plain}')
   
@@ -71,16 +77,29 @@ def wrcom(dictone, dicttwo, ti=0.005):
         val2 = dicttwo[key]
         if val1 != val2:
           sys.stdout.write(f'{key} : {yellow}{val2}{plain}')
+        else:
+          sys.stdout.write(f'{key} : {val2}')
       
-      
+def twtable(object_):
+  print('Name ' + ' '*3 + '| Value\n')
+  for each in object_:
+    print(f'{each.get('name')} ' + ' '*3 + f'| {each.get('value')}\n',flush=True,end='')
+  print('\n')
+
+def trptable(object_):
+  print('Name' + ' '*3 + '| Placeholder ' +'| Required\n')
+  for each in object_:
+    print(f'{each.get('name')} ' +' '*3 + f'| {each.get('placeholder')} ' + f'| {True if each.get('required') else False}\n',flush=True,end='')
+  print('\n')
+  
       
 def wrdic(dict_,co=plain,ti=0.002,mi=False):
   if isinstance(dict_,dict):
     for k, v in dict_.items():
       if mi:
-        sys.stdout.write(f'{co}%s{plain} : %s\n'%(k,v[:20]))
+        sys.stdout.write(f'{co}%s{plain} : %s\n'%(redefine(k),v[:20]))
       else:
-        sys.stdout.write(f'{co}%s{plain} : %s\n'%(k,v))
+        sys.stdout.write(f'{co}%s{plain} : %s\n'%(redefine(k),v))
       sys.stdout.flush()
       time.sleep(ti)
     sys.stdout.write(f'\n')

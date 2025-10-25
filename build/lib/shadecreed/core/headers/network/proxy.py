@@ -1,6 +1,7 @@
 import httpx,random,os,json
 from shadecreed.ux.anime import wr
 from shadecreed.core.utils.base import base_dir,cache_dir
+from shadecreed.core.utils.base import cacheStorage
 
 def proxUse():
   if os.path.exists(f'{base_dir}/proxy.txt'):
@@ -19,9 +20,7 @@ def proxyParse(use):
 
 def readCache(content=False):
   if content == False:
-    with open(f'{cache_dir}/cache.json','r') as file:
-      cache = json.load(file)
-      return cache
+      return cacheStorage.export_dict()
   else:
     if os.path.exists(f'{cache_dir}/page.html'):
       with open(f'{cache_dir}/page.html') as content:

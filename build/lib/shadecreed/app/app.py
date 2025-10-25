@@ -5,12 +5,11 @@ module_path = os.path.abspath(os.path.dirname(os.path.join(__file__,'..','..')))
 if not module_path in sys.path:
   sys.path.insert(0, module_path)
   
-from shadecreed.core.middleware.schedule import taskSchedule
 from shadecreed.ux.anime import wr
 from shadecreed.ux.process import streamData
+from shadecreed.core.utils.base import schedule
 app = Flask(__name__)
 
-schedule = taskSchedule()
 @app.route('/steal', methods=['POST'])
 def steal():
   try:

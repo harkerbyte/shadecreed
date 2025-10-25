@@ -1,7 +1,7 @@
-import os,re,sys,json,subprocess,time,signal
+import os,re,sys,subprocess,time,signal
 from shadecreed.ux.ascii import xssAssist
 from shadecreed.ux.anime import wr,wrdel,wrtime,wrcold,wrloader
-from shadecreed.core.utils.base import base_dir
+from shadecreed.core.utils.base import base_dir,record,processStorage
 class drive:
   def __init__(self,app_path=f'{base_dir}/app/app.py',flask_output=f'{base_dir}/core/middleware/flask.txt',tunnel_path=f'{base_dir}/core/middleware/tunnel.txt',silence_process = False,port=5000):
     self.silence_process = silence_process
@@ -32,6 +32,7 @@ class drive:
                     self.server_url = match.group()
                     if self.server_url is not None:
                       if 'api.trycloudflare' not in self.server_url:
+                        record(payload=True)
                         break               
                       else:
                         wr('Failed to request quick tunnel',co='\x1b[1;31m')
@@ -43,7 +44,7 @@ class drive:
               wr(xssAssist(self.content_delivery()))
               self.process()
           else:
-            wr('Missing cloudflared package, see documentation : ')
+            wr('Missing cloudflared package, see documentation : https://pypi.org/project/shadecreed/',co='\x1b[1;33m')
             self.close()
         else:
           self.close()
@@ -105,9 +106,8 @@ class drive:
         break
   
   def process(self):
-    with open(f'{base_dir}/core/middleware/process.json', 'w') as proc:
-      store = {'keep-alive' : True if self.silence_process == True else False}
-      json.dump(store, proc,indent=2)
+    store = {'keep-alive' : True if self.silence_process else False}
+    processStorage.import_dict(store,overwrite=True)
     
   def close(self):
     if self.app:

@@ -6,12 +6,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from shadecreed.ux.anime import wr,wrdic,wrdel,wrtime,wrcold,wrloader
 from shadecreed.ux.ascii import red,blue,yellow,green,plain,bruteAssist,xssStart
-from shadecreed.ux.process import skim
+from shadecreed.ux.process import skim,analyzePageContent
 from shadecreed.core.headers.network.proxy import readCache, proxyTest
 from bs4 import BeautifulSoup as bs
 from jinja2 import Template
 from shadecreed.core.middleware.drive import drive
-from shadecreed.core.utils.base import base_dir,password_dir
+from shadecreed.core.utils.base import base_dir,password_dir,calculate_age,record
 
 def buildConfig(placeholder,submit,sub_tag):
   target= readCache()['target']
@@ -96,18 +96,12 @@ def runBrute():
                 driver.quit()
         else:
           wr('%s not found'%passwords, co=red)
-
+      
 def analyzeHeaders(url):
   report = {}
-  if isinstance(url, dict):
-    headers = url
-  else:
-    response = httpx.request('GET',url,follow_redirects=True)
-    headers = dict(response.headers)
-  # Normalize header keys (case-insensitive)
+  headers = url
   headers = {k.lower(): v for k, v in headers.items()}
   
-    # 1. Content-Security-Policy (CSP)
   csp = headers.get("content-security-policy", "")
   if not csp:
     report["CSP"] = "Not set - XSS friendly"
@@ -116,21 +110,18 @@ def analyzeHeaders(url):
   else:
     report["CSP"] = "Strong CSP -> payloads may be blocked"
 
-    # 2. X-Content-Type-Options
   xcto = headers.get("x-content-type-options", "")
   if xcto.lower() == "nosniff":
       report["X-Content-Type-Options"] = "nosniff enabled -> MIME spoofing blocked"
   else:
       report["X-Content-Type-Options"] = "nosniff not set -> possible MIME tricks"
 
-    # 3. X-Frame-Options
   xfo = headers.get("x-frame-options", "")
   if xfo:
     report["X-Frame-Options"] = f"Framing blocked: {xfo}"
   else:
       report["X-Frame-Options"] = "Framing allowed -> clickjacking possible"
 
-    # 4. Access-Control-Allow-Origin
   acao = headers.get("access-control-allow-origin", "")
   if acao == "*":
     report["CORS"] = "Wide open CORS -> exfil via fetch possible"
@@ -139,7 +130,6 @@ def analyzeHeaders(url):
   else:
     report["CORS"] = "CORS not set -> restricts cross-origin JS fetch"
 
-    # 5. Referrer-Policy
   refpol = headers.get("referrer-policy", "")
   if refpol in ["no-referrer", "strict-origin"]:
     report["Referrer-Policy"] = f"Limited referrer: {refpol}"
@@ -148,7 +138,6 @@ def analyzeHeaders(url):
   else:
     report["Referrer-Policy"] = f"Moderate: {refpol}"
 
-    # 6. Set-Cookie
   cookies = headers.get("set-cookie", "")
   if cookies:
     if "httponly" in cookies.lower():
@@ -158,37 +147,51 @@ def analyzeHeaders(url):
   else:
     report["Cookies"] = "No Set-Cookie header"
 
-    # 7. Content-Type
   ctype = headers.get("content-type", "")
   if "text/html" in ctype:
     report["Content-Type"] = "text/html -> XSS possible"
   else:
     report["Content-Type"] = f"Non-HTML: {ctype}"
 
-    # 8. Server Banner (optional)
   server = headers.get("server", "")
   if server:
     report["Server"] = f"{server} -> check for known CVEs"
   else:
     report["Server"] = "Server banner not exposed"
-
-  wrdic(report,co='\x1b[1;32m')
-
+  
+  cache = headers.get('cache-control', "")
+  if 'max-age' in cache:
+    report['Cache-control'] = ','.join(each for each in cache.split(',') if each != '')
+    report['Cache-max-age (mins)'] = calculate_age(cache)
+  elif ',' in cache:
+    report['cache-control'] = ','.join(each for each in cache.split(',') if each.strip())
+  else:
+    if cache:
+      report['Cache-control'] = cache
+    
+  wrdic(report,co='\x1b[1;36m')
+      
 def runAnalyzeHeaders():
-  parse = argparse.ArgumentParser(description="shadecreed : toolkit; xss vulnerebility scan ")
+  parse = argparse.ArgumentParser(description="shadecreed : toolkit; web application vulnerebility scan")
   parse.add_argument('--url',help="<target_url>",required=True)
   args = parse.parse_args()
   if args.url:
     if args.url.startswith('http'):
-      analyzeHeaders(args.url)
+      try:
+        response = httpx.request('GET',args.url,follow_redirects=True)
+      except Exception as error:
+        print(error)
+        sys.exit()
+      analyzeHeaders(dict(response.headers))
+      analyzePageContent(response)
+      record(scan=True)
     else:
       wr(f'{args.url} is not a valid http address')
-    
-redefine = lambda text : ''.join(' ' if c == '_' else c for c in text)
+   
 
 def runBuildXss():
   parser = argparse.ArgumentParser(description="shadecreed : toolkit; customize, forge and deploy payload to custom dynamic endpoints")
-  parser.add_argument('--url', help="<target_url>", required=True)
+  parser.add_argument('-u','--url', help="<target_url>", required=True)
   parser.add_argument('--script', help="script path")
   parser.add_argument('--endpoint',help="custom endpoint")
   args = parser.parse_args()
@@ -209,7 +212,7 @@ def buildXss(url=None,template=None,endpoint=None):
     if endpoint == None:
       silent = input('Live stream received datas [ Y/N ] : ').strip()
       if isinstance(silent, str) and silent.lower() != 'q':
-        xss = drive(silence_process=True if silent.lower() in ('yes','y') else False)
+        xss = drive(silence_process=False if silent.lower() in ('yes','y') else True)
         xss.start()
       elif silent.lower() in ('q','quit'):
         os.kill(os.getpid(), signal.SIGINT)
@@ -232,7 +235,9 @@ def buildXss(url=None,template=None,endpoint=None):
       
     
     try:
-      if silent and silent.lower() in ('yes','y'):
+      if silent or not silent:
+        if silent.lower() in ('yes','y'):
+          wrcold('Received logs will be streamed as soon as it is captured',co='\x1b[1;33m',timeout=6)
         wr('Grab a coffee ☕, this might take a while')
         wr('`ctrl+c` to close session',co='\x1b[1;31m')
         xss.listen()

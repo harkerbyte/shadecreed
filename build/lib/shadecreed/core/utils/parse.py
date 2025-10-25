@@ -16,7 +16,7 @@ class Parse:
       cmds = list(self.cmds.split(','))
       for co in cmds:
         if '=' in co:
-          key, va = co.split('=')
+          key, va = co.split('=',1)
           if key.lower() == 'del' and va != 'all' and va in self.use:
             del self.use[va]
           elif key.lower() == 'del' and va == 'all':
@@ -25,7 +25,7 @@ class Parse:
             self.fi[key.lower()] = va
     else:
       if '=' in self.cmds:
-        key, va = self.cmds.split('=')
+        key, va = self.cmds.split('=',1)
         if key.lower() == 'del' and va != 'all' and va in self.use:
           del self.use[va]
         elif key.lower() == 'del' and va == 'all':
