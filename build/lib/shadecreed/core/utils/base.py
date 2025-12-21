@@ -21,6 +21,8 @@ stream_dir = f"{home_dir}/logs/xss"
 
 #Temp dirs
 base_dir = Path(__file__).resolve().parents[2]
+static_dir = base_dir / "app" / "static"
+static_dir.mkdir(parents=True,exist_ok=True)
 cache_dir = base_dir / 'cache'
 password_dir = base_dir / 'path'
 

